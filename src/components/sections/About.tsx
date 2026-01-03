@@ -57,6 +57,28 @@ export function About() {
             </div>
           </AnimatedSection>
 
+          <AnimatedSection delay={0.15}>
+            <div className="bg-gradient-to-br from-primary-50 to-accent-50 rounded-2xl p-8 md:p-10 mb-12 border border-primary-100">
+              <h3 className="text-2xl md:text-3xl font-bold text-primary-900 mb-2 font-heading text-center">
+                Meet the Principal Scientist
+              </h3>
+              <p className="text-xl font-semibold text-primary-700 mb-1 text-center">
+                Fernando H. Biase, Ph.D.
+              </p>
+              <p className="text-md text-gray-600 mb-6 text-center">
+                Associate Professor, School of Animal Sciences, Virginia Tech
+              </p>
+              <blockquote className="text-lg text-gray-700 leading-relaxed italic border-l-4 border-accent-500 pl-6 space-y-4">
+                <p>
+                  "After two decades in functional genomics, I've seen brilliant research stall because data analysis became a barrier instead of a bridge to discovery.
+                </p>
+                <p>
+                  I hold a Ph.D. in Genetics and Molecular Biology from the University of São Paulo and lead USDA-funded research. At BiODAVis, I personally review every analysis to ensure scientifically rigorous results. You can now focus on actionable biological insights, not just tables difficult to interpret."
+                </p>
+              </blockquote>
+            </div>
+          </AnimatedSection>
+
           <AnimatedSection delay={0.2}>
             <div className="grid grid-cols-2 gap-6">
               {credentials.map((credential, index) => (
