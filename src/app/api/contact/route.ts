@@ -2,8 +2,6 @@ import { NextResponse } from "next/server";
 import { Resend } from "resend";
 import { z } from "zod";
 
-const resend = new Resend(process.env.RESEND_API_KEY);
-
 const contactSchema = z.object({
   name: z.string().min(2),
   email: z.string().email(),
@@ -16,6 +14,9 @@ export async function POST(request: Request) {
   try {
     const body = await request.json();
     const data = contactSchema.parse(body);
+
+    // Initialize Resend only when the API is called
+    const resend = new Resend(process.env.RESEND_API_KEY || "");
 
     const serviceLabels: { [key: string]: string } = {
       "rna-seq": "RNA-Sequencing Analysis",
