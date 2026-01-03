@@ -1,0 +1,130 @@
+"use client";
+
+import { useState, useEffect } from "react";
+import { Menu, X } from "lucide-react";
+import { Button } from "@/components/ui/Button";
+import { NAV_LINKS, SITE_NAME, SITE_TAGLINE, SITE_SLOGAN } from "@/lib/constants";
+
+export function Header() {
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 20);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  const scrollToSection = (href: string) => {
+    const element = document.querySelector(href);
+    if (element) {
+      const offset = 80; // Header height
+      const elementPosition = element.getBoundingClientRect().top;
+      const offsetPosition = elementPosition + window.pageYOffset - offset;
+
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: "smooth",
+      });
+    }
+    setIsMobileMenuOpen(false);
+  };
+
+  return (
+    <header
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+        isScrolled
+          ? "bg-white/95 backdrop-blur-md shadow-md"
+          : "bg-transparent"
+      }`}
+    >
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex items-center justify-between h-20">
+          {/* Logo */}
+          <button
+            onClick={() => scrollToSection("#hero")}
+            className="flex items-center space-x-2 group"
+          >
+            <div className="w-10 h-10 bg-gradient-to-br from-primary-500 to-accent-500 rounded-lg flex items-center justify-center">
+              <span className="text-white font-bold text-xl">B</span>
+            </div>
+            <div className="hidden sm:block">
+              <div className={`font-heading font-bold text-lg transition-colors duration-300 ${
+                isScrolled ? 'text-primary-900' : 'text-white'
+              }`}>
+                {SITE_NAME}: {SITE_TAGLINE}
+              </div>
+              <div className={`text-sm font-medium -mt-1 italic transition-colors duration-300 ${
+                isScrolled ? 'text-accent-600' : 'text-gray-100'
+              }`}>
+                {SITE_SLOGAN}
+              </div>
+            </div>
+          </button>
+
+          {/* Desktop Navigation */}
+          <nav className="hidden md:flex items-center space-x-8">
+            {NAV_LINKS.map((link) => (
+              <button
+                key={link.href}
+                onClick={() => scrollToSection(link.href)}
+                className={`font-medium transition-colors ${
+                  isScrolled
+                    ? 'text-gray-700 hover:text-primary-700'
+                    : 'text-white hover:text-gray-200'
+                }`}
+              >
+                {link.label}
+              </button>
+            ))}
+            <Button
+              variant="primary"
+              size="sm"
+              onClick={() => scrollToSection("#contact")}
+            >
+              Get Started
+            </Button>
+          </nav>
+
+          {/* Mobile Menu Button */}
+          <button
+            className="md:hidden p-2 text-gray-700 hover:text-primary-700"
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+          >
+            {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+          </button>
+        </div>
+
+        {/* Mobile Menu */}
+        {isMobileMenuOpen && (
+          <div className="md:hidden py-4 border-t border-gray-200 bg-white">
+            <nav className="flex flex-col space-y-4">
+              {NAV_LINKS.map((link) => (
+                <button
+                  key={link.href}
+                  onClick={() => scrollToSection(link.href)}
+                  className="text-gray-700 hover:text-primary-700 font-medium transition-colors text-left px-4 py-2"
+                >
+                  {link.label}
+                </button>
+              ))}
+              <div className="px-4">
+                <Button
+                  variant="primary"
+                  size="md"
+                  className="w-full"
+                  onClick={() => scrollToSection("#contact")}
+                >
+                  Get Started
+                </Button>
+              </div>
+            </nav>
+          </div>
+        )}
+      </div>
+    </header>
+  );
+}
