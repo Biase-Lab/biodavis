@@ -5,7 +5,7 @@ interface ServiceCardProps {
   icon: ReactNode;
   title: string;
   description: string;
-  features: string[];
+  features: readonly string[];
 }
 
 export function ServiceCard({
