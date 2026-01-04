@@ -2,6 +2,7 @@
 
 import { AnimatedSection } from "@/components/ui/AnimatedSection";
 import { Award, BookOpen, Users, TrendingUp } from "lucide-react";
+import Image from "next/image";
 
 export function About() {
   const credentials = [
@@ -42,7 +43,7 @@ export function About() {
           </div>
         </AnimatedSection>
 
-        <div className="grid md:grid-cols-2 gap-12 items-center mb-16">
+        <div className="grid md:grid-cols-2 gap-12 items-start mb-16">
           <AnimatedSection delay={0.1}>
             <div className="space-y-6">
               <p className="text-lg text-gray-700 leading-relaxed">
@@ -58,7 +59,18 @@ export function About() {
           </AnimatedSection>
 
           <AnimatedSection delay={0.15}>
-            <div className="bg-gradient-to-br from-primary-50 to-accent-50 rounded-2xl p-8 md:p-10 mb-12 border border-primary-100">
+            <div className="bg-gradient-to-br from-primary-50 to-accent-50 rounded-2xl p-8 md:p-10 border border-primary-100">
+              <div className="flex justify-center mb-6">
+                <div className="relative w-32 h-32 rounded-full overflow-hidden ring-4 ring-white shadow-xl">
+                  <Image
+                    src="/fernando_biase.jpg"
+                    alt="Fernando H. Biase, Ph.D."
+                    fill
+                    className="object-cover object-[center_15%]"
+                    priority
+                  />
+                </div>
+              </div>
               <h3 className="text-2xl md:text-3xl font-bold text-primary-900 mb-2 font-heading text-center">
                 Meet the Principal Scientist
               </h3>
@@ -70,7 +82,7 @@ export function About() {
               </p>
               <blockquote className="text-lg text-gray-700 leading-relaxed italic border-l-4 border-accent-500 pl-6 space-y-4">
                 <p>
-                  "After two decades in functional genomics, I've seen brilliant research stall because data analysis became a barrier instead of a bridge to discovery.
+                  "After working for two decades in functional genomics, I've seen brilliant research stall because data analysis became a barrier instead of a bridge to discovery.
                 </p>
                 <p>
                   I hold a Ph.D. in Genetics and Molecular Biology from the University of São Paulo and lead USDA-funded research. At BiODAVis, I personally review every analysis to ensure scientifically rigorous results. You can now focus on actionable biological insights, not just tables difficult to interpret."
@@ -78,24 +90,24 @@ export function About() {
               </blockquote>
             </div>
           </AnimatedSection>
-
-          <AnimatedSection delay={0.2}>
-            <div className="grid grid-cols-2 gap-6">
-              {credentials.map((credential, index) => (
-                <div
-                  key={index}
-                  className="bg-white rounded-xl p-6 shadow-md hover:shadow-lg transition-shadow"
-                >
-                  <div className="text-accent-500 mb-3">{credential.icon}</div>
-                  <div className="text-3xl font-bold text-primary-900 mb-1 font-heading">
-                    {credential.value}
-                  </div>
-                  <div className="text-sm text-gray-600">{credential.label}</div>
-                </div>
-              ))}
-            </div>
-          </AnimatedSection>
         </div>
+
+        <AnimatedSection delay={0.2}>
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+            {credentials.map((credential, index) => (
+              <div
+                key={index}
+                className="bg-white rounded-xl p-6 shadow-md hover:shadow-lg transition-shadow"
+              >
+                <div className="text-accent-500 mb-3">{credential.icon}</div>
+                <div className="text-3xl font-bold text-primary-900 mb-1 font-heading">
+                  {credential.value}
+                </div>
+                <div className="text-sm text-gray-600">{credential.label}</div>
+              </div>
+            ))}
+          </div>
+        </AnimatedSection>
       </div>
     </section>
   );
