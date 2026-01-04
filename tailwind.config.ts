@@ -18,7 +18,9 @@ const config: Config = {
         },
         accent: {
           700: "#0891b2", // Darker teal - emphasis
+          600: "#0ea5d4", // Medium teal
           500: "#1CABE3", // Teal/cyan - icons, highlights
+          400: "#4dc3ee", // Light teal
         },
       },
       fontFamily: {

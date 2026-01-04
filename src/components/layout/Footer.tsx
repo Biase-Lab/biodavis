@@ -21,8 +21,10 @@ export function Footer() {
                 />
               </div>
               <div>
-                <div className="text-base font-bold leading-tight">Omics Data Analysis & Visualization</div>
-                <div className="text-base text-accent-400 font-bold italic mt-0.5">See Your Science</div>
+                <div className="text-lg font-bold leading-tight">
+                  <span className="text-accent-400">O</span>mics <span className="text-accent-400">D</span>ata <span className="text-accent-400">A</span>nalysis & <span className="text-accent-400">Vis</span>ualization
+                </div>
+                <div className="text-lg text-accent-400 font-bold italic mt-0.5">See Your Science</div>
               </div>
             </div>
             <p className="text-gray-300 text-sm leading-relaxed">

@@ -59,12 +59,12 @@ export function Header() {
               />
             </div>
             <div className="hidden sm:block">
-              <div className={`text-base font-bold transition-colors duration-300 ${
+              <div className={`text-lg font-bold transition-colors duration-300 ${
                 isScrolled ? 'text-primary-900' : 'text-white'
               }`}>
-                Omics Data Analysis & Visualization
+                <span className={isScrolled ? 'text-accent-600' : 'text-accent-400'}>O</span>mics <span className={isScrolled ? 'text-accent-600' : 'text-accent-400'}>D</span>ata <span className={isScrolled ? 'text-accent-600' : 'text-accent-400'}>A</span>nalysis & <span className={isScrolled ? 'text-accent-600' : 'text-accent-400'}>Vis</span>ualization
               </div>
-              <div className={`text-base font-bold italic transition-colors duration-300 ${
+              <div className={`text-lg font-bold italic transition-colors duration-300 ${
                 isScrolled ? 'text-accent-600' : 'text-gray-100'
               }`}>
                 See Your Science
