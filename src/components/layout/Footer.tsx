@@ -1,5 +1,6 @@
-import { SITE_NAME, SITE_TAGLINE, SITE_SLOGAN, CONTACT_EMAIL, SERVICES } from "@/lib/constants";
+import { CONTACT_EMAIL, SERVICES } from "@/lib/constants";
 import { Mail, Linkedin } from "lucide-react";
+import Image from "next/image";
 
 export function Footer() {
   const currentYear = new Date().getFullYear();
@@ -7,16 +8,21 @@ export function Footer() {
   return (
     <footer className="bg-primary-900 text-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-[1.5fr_0.8fr_2fr_1fr] gap-8">
           {/* Company Info */}
-          <div className="lg:col-span-1">
+          <div>
             <div className="flex items-center space-x-2 mb-4">
-              <div className="w-10 h-10 bg-gradient-to-br from-primary-500 to-accent-500 rounded-lg flex items-center justify-center">
-                <span className="text-white font-bold text-xl">B</span>
+              <div className="relative h-10 w-32 bg-white rounded px-2 py-1">
+                <Image
+                  src="/biodavis-logo.png"
+                  alt="BiODAVis - Omics Data Analysis and Visualization"
+                  fill
+                  className="object-contain object-left"
+                />
               </div>
               <div>
-                <div className="font-heading font-bold text-base leading-tight">{SITE_NAME}: {SITE_TAGLINE}</div>
-                <div className="text-sm text-accent-400 font-medium italic mt-0.5">{SITE_SLOGAN}</div>
+                <div className="text-base font-bold leading-tight">Omics Data Analysis & Visualization</div>
+                <div className="text-base text-accent-400 font-bold italic mt-0.5">See Your Science</div>
               </div>
             </div>
             <p className="text-gray-300 text-sm leading-relaxed">
@@ -66,8 +72,8 @@ export function Footer() {
           {/* Services */}
           <div>
             <h3 className="font-semibold text-lg mb-4">Services</h3>
-            <ul className="space-y-2">
-              {SERVICES.slice(0, 5).map((service) => (
+            <ul className="grid grid-cols-2 gap-x-4 gap-y-2">
+              {SERVICES.map((service) => (
                 <li key={service.id}>
                   <span className="text-gray-300 text-sm">{service.title}</span>
                 </li>
@@ -114,7 +120,7 @@ export function Footer() {
             Faculty-led bioinformatics service | School of Animal Sciences, Virginia Tech
           </p>
           <p className="text-gray-400 text-sm">
-            &copy; {currentYear} {SITE_NAME}. All rights reserved.
+            &copy; {currentYear} BiODAVis. All rights reserved.
           </p>
         </div>
       </div>

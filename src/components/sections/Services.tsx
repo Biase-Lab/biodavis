@@ -3,17 +3,89 @@
 import { AnimatedSection } from "@/components/ui/AnimatedSection";
 import { ServiceCard } from "@/components/ui/ServiceCard";
 import { SERVICES } from "@/lib/constants";
-import { BarChart3, Microscope, Bug, Dna, Activity, Network, FlaskConical, Layers } from "lucide-react";
+import Image from "next/image";
 
 const iconMap = {
-  "rna-seq": <BarChart3 className="w-12 h-12" />,
-  "single-cell": <Microscope className="w-12 h-12" />,
-  microbiome: <Bug className="w-12 h-12" />,
-  nanopore: <Dna className="w-12 h-12" />,
-  "wgs-snp": <Activity className="w-12 h-12" />,
-  "small-rna": <Network className="w-12 h-12" />,
-  metabolomics: <FlaskConical className="w-12 h-12" />,
-  proteomics: <Layers className="w-12 h-12" />,
+  "rna-seq": (
+    <div className="relative w-12 h-12">
+      <Image
+        src="/RNA-sequencing.png"
+        alt="RNA Sequencing"
+        fill
+        className="object-contain"
+      />
+    </div>
+  ),
+  "single-cell": (
+    <div className="relative w-12 h-12">
+      <Image
+        src="/single_cell_rna_seq.png"
+        alt="Single Cell RNA-seq"
+        fill
+        className="object-contain"
+      />
+    </div>
+  ),
+  microbiome: (
+    <div className="relative w-12 h-12">
+      <Image
+        src="/metagenome.png"
+        alt="Microbiome Analysis"
+        fill
+        className="object-contain"
+      />
+    </div>
+  ),
+  nanopore: (
+    <div className="relative w-12 h-12">
+      <Image
+        src="/DNA_sequencing_nanomore.png"
+        alt="Nanopore Sequencing"
+        fill
+        className="object-contain"
+      />
+    </div>
+  ),
+  "wgs-snp": (
+    <div className="relative w-12 h-12">
+      <Image
+        src="/WGS.png"
+        alt="Whole Genome Sequencing"
+        fill
+        className="object-contain"
+      />
+    </div>
+  ),
+  "small-rna": (
+    <div className="relative w-12 h-12">
+      <Image
+        src="/RNA-sequencing.png"
+        alt="Small RNA Sequencing"
+        fill
+        className="object-contain"
+      />
+    </div>
+  ),
+  metabolomics: (
+    <div className="relative w-12 h-12">
+      <Image
+        src="/metabolome.png"
+        alt="Metabolomics"
+        fill
+        className="object-contain"
+      />
+    </div>
+  ),
+  proteomics: (
+    <div className="relative w-12 h-12">
+      <Image
+        src="/proteome.png"
+        alt="Proteomics"
+        fill
+        className="object-contain"
+      />
+    </div>
+  ),
 };
 
 export function Services() {

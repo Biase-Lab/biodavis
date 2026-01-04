@@ -3,7 +3,8 @@
 import { useState, useEffect } from "react";
 import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/Button";
-import { NAV_LINKS, SITE_NAME, SITE_TAGLINE, SITE_SLOGAN } from "@/lib/constants";
+import { NAV_LINKS } from "@/lib/constants";
+import Image from "next/image";
 
 export function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -46,21 +47,27 @@ export function Header() {
           {/* Logo */}
           <button
             onClick={() => scrollToSection("#hero")}
-            className="flex items-center space-x-2 group"
+            className="flex items-center space-x-3 group"
           >
-            <div className="w-10 h-10 bg-gradient-to-br from-primary-500 to-accent-500 rounded-lg flex items-center justify-center">
-              <span className="text-white font-bold text-xl">B</span>
+            <div className="relative h-12 w-32 sm:w-40">
+              <Image
+                src="/biodavis-logo.png"
+                alt="BiODAVis - Omics Data Analysis and Visualization"
+                fill
+                className="object-contain object-left"
+                priority
+              />
             </div>
             <div className="hidden sm:block">
-              <div className={`font-heading font-bold text-lg transition-colors duration-300 ${
+              <div className={`text-base font-bold transition-colors duration-300 ${
                 isScrolled ? 'text-primary-900' : 'text-white'
               }`}>
-                {SITE_NAME}: {SITE_TAGLINE}
+                Omics Data Analysis & Visualization
               </div>
-              <div className={`text-sm font-medium -mt-1 italic transition-colors duration-300 ${
+              <div className={`text-base font-bold italic transition-colors duration-300 ${
                 isScrolled ? 'text-accent-600' : 'text-gray-100'
               }`}>
-                {SITE_SLOGAN}
+                See Your Science
               </div>
             </div>
           </button>
@@ -91,7 +98,11 @@ export function Header() {
 
           {/* Mobile Menu Button */}
           <button
-            className="md:hidden p-2 text-gray-700 hover:text-primary-700"
+            className={`md:hidden p-2 transition-colors ${
+              isScrolled
+                ? 'text-gray-700 hover:text-primary-700'
+                : 'text-white hover:text-gray-200'
+            }`}
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
           >
             {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
