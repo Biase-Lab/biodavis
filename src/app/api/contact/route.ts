@@ -15,13 +15,14 @@ export async function POST(request: Request) {
     const body = await request.json();
     const data = contactSchema.parse(body);
 
-    // Debug: Log environment variable status
+    // Debug: Check environment variable status
     const apiKey = process.env.RESEND_API_KEY;
-    console.log("RESEND_API_KEY exists:", !!apiKey);
-    console.log("RESEND_API_KEY length:", apiKey?.length || 0);
+    console.log("[Contact API] RESEND_API_KEY exists:", !!apiKey);
+    console.log("[Contact API] RESEND_API_KEY length:", apiKey?.length || 0);
+    console.log("[Contact API] All env keys:", Object.keys(process.env).filter(k => k.includes('RESEND')));
 
     if (!apiKey) {
-      console.error("RESEND_API_KEY is not set in environment variables");
+      console.error("[Contact API] RESEND_API_KEY is not set in environment variables");
       return NextResponse.json(
         { error: "Server configuration error", details: "Email service not configured" },
         { status: 500 }
