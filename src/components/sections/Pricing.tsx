@@ -8,24 +8,24 @@ export function Pricing() {
   const tiers = [
     {
       name: "Academic",
-      price: "Per-Sample Pricing",
+      price: "Base pricing",
       description: "Transparent pricing based on analysis type",
       services: [
-        { name: "RNA-seq", price: "$100/sample" },
-        { name: "Small-RNA seq", price: "$100/sample" },
-        { name: "Single-cell RNA-seq", price: "$150/sample" },
-        { name: "WGS SNP analysis", price: "$125/sample" },
-        { name: "Metagenome", price: "$125/sample" },
-        { name: "Nanopore long-read", price: "$150/sample" },
+        { name: "RNA-seq", price: "$175/sample" },
+        { name: "Small-RNA-seq", price: "$175/sample" },
+        { name: "Single-cell RNA-seq", price: "$2,000/analysis" },
+        { name: "WGS SNP analysis", price: "$150/sample" },
+        { name: "Metagenome", price: "$150/sample" },
+        { name: "Nanopore long read processing", price: "$200/run" },
         { name: "Metabolomics", price: "$600/analysis" },
         { name: "Proteomics", price: "$600/analysis" },
       ],
       features: [
         "Customized pipelines for processing sequence data",
         "Comprehensive results report",
-        "Basic visualization package",
-        "Manuscript preparation assistance",
-        "Email support",
+        "Dinamic visualization dashboard",
+        "Download processed files",
+        "Download result files",
         "2-week delivery",
       ],
       cta: "Get Started",
@@ -36,12 +36,12 @@ export function Pricing() {
       price: "Custom Pricing",
       description: "For ongoing research partnerships",
       features: [
-        "Unlimited datasets",
         "Fully customized pipelines",
-        "Comprehensive reports & presentations",
+        "Dinamic visualization dashboard",
         "Custom visualization development",
+        "Download processed files",
+        "Download result files",
         "Dedicated support channel",
-        "Manuscript preparation assistance",
         "Flexible delivery schedule",
       ],
       cta: "Contact Us",
@@ -79,19 +79,8 @@ export function Pricing() {
           {tiers.map((tier, index) => (
             <AnimatedSection key={index} delay={0.1 * index}>
               <div
-                className={`relative h-full bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 ${
-                  tier.featured
-                    ? "ring-2 ring-accent-500 scale-105 md:scale-110"
-                    : ""
-                }`}
+                className="relative h-full bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300"
               >
-                {tier.featured && (
-                  <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
-                    <span className="bg-accent-500 text-white px-4 py-1 rounded-full text-sm font-semibold">
-                      Most Popular
-                    </span>
-                  </div>
-                )}
                 <div className="p-8">
                   <h3 className="text-2xl font-bold text-primary-900 mb-2 font-heading">
                     {tier.name}

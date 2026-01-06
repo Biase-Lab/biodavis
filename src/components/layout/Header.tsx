@@ -90,7 +90,7 @@ export function Header() {
             <Button
               variant="primary"
               size="sm"
-              onClick={() => scrollToSection("#contact")}
+              onClick={() => scrollToSection("#pricing")}
             >
               Get Started
             </Button>
@@ -127,7 +127,7 @@ export function Header() {
                   variant="primary"
                   size="md"
                   className="w-full"
-                  onClick={() => scrollToSection("#contact")}
+                  onClick={() => scrollToSection("#pricing")}
                 >
                   Get Started
                 </Button>
