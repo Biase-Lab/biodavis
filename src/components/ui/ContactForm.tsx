@@ -8,6 +8,7 @@ import { Input } from "./Input";
 import { Textarea } from "./Textarea";
 import { Button } from "./Button";
 import { Loader2, CheckCircle2, XCircle } from "lucide-react";
+import { CONTACT_EMAIL } from "@/lib/constants";
 
 const contactSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters"),
@@ -158,7 +159,7 @@ export function ContactForm() {
           <div className="text-sm">
             <p className="font-medium">Failed to send message</p>
             {errorMessage && <p className="mt-1 text-red-600">{errorMessage}</p>}
-            <p className="mt-1">Please try again or email us directly at contact@biodavis.com</p>
+            <p className="mt-1">Please try again or email us directly at {CONTACT_EMAIL}</p>
           </div>
         </div>
       )}

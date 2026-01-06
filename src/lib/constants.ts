@@ -4,7 +4,7 @@ export const SITE_SLOGAN = "See Your Science";
 export const SITE_DESCRIPTION =
   "Interactive multi-omics analysis for animal science researchers—delivered through custom interactive dashboards, not file dumps. Faculty-led expertise for livestock, poultry, companion animals, rodents and human genomics.";
 
-export const CONTACT_EMAIL = "contact@biodavis.com";
+export const CONTACT_EMAIL = "fbiase@vt.edu";
 
 export const SERVICES = [
   {
