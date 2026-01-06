@@ -116,13 +116,29 @@ export function Pricing() {
                     </div>
                   )}
 
-                  <Button
-                    variant={tier.featured ? "accent" : "primary"}
-                    className="w-full mb-6"
-                    onClick={scrollToContact}
-                  >
-                    {tier.cta}
-                  </Button>
+                  {tier.cta === "Get Started" ? (
+                    <a
+                      href="https://biaselb.shinyapps.io/biodavis-pipeline/"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="block w-full mb-6"
+                    >
+                      <Button
+                        variant={tier.featured ? "accent" : "primary"}
+                        className="w-full"
+                      >
+                        {tier.cta}
+                      </Button>
+                    </a>
+                  ) : (
+                    <Button
+                      variant={tier.featured ? "accent" : "primary"}
+                      className="w-full mb-6"
+                      onClick={scrollToContact}
+                    >
+                      {tier.cta}
+                    </Button>
+                  )}
                   <ul className="space-y-3">
                     {tier.features.map((feature, featureIndex) => (
                       <li key={featureIndex} className="flex items-start">
