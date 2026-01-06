@@ -24,6 +24,9 @@ export async function POST(request: Request) {
       microbiome: "Microbiome Analysis",
       nanopore: "Nanopore Long-Read Processing",
       "wgs-snp": "Whole Genome Sequencing",
+      "small-rna": "Small RNA Sequencing",
+      metabolomics: "Metabolomics Analysis",
+      proteomics: "Proteomics Analysis",
       other: "Other / Custom Analysis",
     };
 
@@ -54,13 +57,15 @@ export async function POST(request: Request) {
       </div>
     `;
 
-    await resend.emails.send({
+    const result = await resend.emails.send({
       from: "BiODAVis Contact Form <onboarding@resend.dev>",
       to: [process.env.CONTACT_EMAIL || "contact@biodavis.com"],
       replyTo: data.email,
       subject: `New Contact: ${data.name} - ${serviceLabels[data.service] || data.service}`,
       html: emailHtml,
     });
+
+    console.log("Email sent successfully:", result);
 
     return NextResponse.json({ success: true });
   } catch (error) {
@@ -73,8 +78,20 @@ export async function POST(request: Request) {
       );
     }
 
+    // Log the full error for debugging
+    if (error instanceof Error) {
+      console.error("Error details:", {
+        message: error.message,
+        stack: error.stack,
+        name: error.name,
+      });
+    }
+
     return NextResponse.json(
-      { error: "Failed to send message" },
+      {
+        error: "Failed to send message",
+        details: error instanceof Error ? error.message : "Unknown error"
+      },
       { status: 500 }
     );
   }

@@ -13,7 +13,7 @@ const contactSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters"),
   email: z.string().email("Invalid email address"),
   organization: z.string().optional(),
-  service: z.enum(["rna-seq", "single-cell", "microbiome", "nanopore", "wgs-snp", "other"]),
+  service: z.enum(["rna-seq", "single-cell", "microbiome", "nanopore", "wgs-snp", "small-rna", "metabolomics", "proteomics", "other"]),
   message: z.string().min(10, "Please provide more details about your project"),
 });
 
@@ -22,6 +22,7 @@ type ContactFormData = z.infer<typeof contactSchema>;
 export function ContactForm() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<"idle" | "success" | "error">("idle");
+  const [errorMessage, setErrorMessage] = useState<string>("");
 
   const {
     register,
@@ -35,6 +36,7 @@ export function ContactForm() {
   const onSubmit = async (data: ContactFormData) => {
     setIsSubmitting(true);
     setSubmitStatus("idle");
+    setErrorMessage("");
 
     try {
       const response = await fetch("/api/contact", {
@@ -45,8 +47,10 @@ export function ContactForm() {
         body: JSON.stringify(data),
       });
 
+      const result = await response.json();
+
       if (!response.ok) {
-        throw new Error("Failed to send message");
+        throw new Error(result.details || result.error || "Failed to send message");
       }
 
       setSubmitStatus("success");
@@ -55,7 +59,11 @@ export function ContactForm() {
     } catch (error) {
       console.error("Contact form error:", error);
       setSubmitStatus("error");
-      setTimeout(() => setSubmitStatus("idle"), 5000);
+      setErrorMessage(error instanceof Error ? error.message : "Failed to send message");
+      setTimeout(() => {
+        setSubmitStatus("idle");
+        setErrorMessage("");
+      }, 5000);
     } finally {
       setIsSubmitting(false);
     }
@@ -92,13 +100,17 @@ export function ContactForm() {
         <select
           {...register("service")}
           className="flex h-12 w-full rounded-lg border border-gray-300 bg-white px-4 py-2 text-base ring-offset-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 transition-all"
+          defaultValue=""
         >
-          <option value="">Select a service...</option>
+          <option value="" disabled>Select a service...</option>
           <option value="rna-seq">RNA-Sequencing Analysis</option>
           <option value="single-cell">Single Cell RNA-Sequencing</option>
           <option value="microbiome">Microbiome Analysis</option>
           <option value="nanopore">Nanopore Long-Read Processing</option>
           <option value="wgs-snp">Whole Genome Sequencing</option>
+          <option value="small-rna">Small RNA Sequencing</option>
+          <option value="metabolomics">Metabolomics Analysis</option>
+          <option value="proteomics">Proteomics Analysis</option>
           <option value="other">Other / Custom Analysis</option>
         </select>
         {errors.service && (
@@ -143,9 +155,11 @@ export function ContactForm() {
       {submitStatus === "error" && (
         <div className="flex items-center p-4 bg-red-50 border border-red-200 rounded-lg text-red-800">
           <XCircle className="w-5 h-5 mr-2 flex-shrink-0" />
-          <p className="text-sm">
-            Failed to send message. Please try again or email us directly.
-          </p>
+          <div className="text-sm">
+            <p className="font-medium">Failed to send message</p>
+            {errorMessage && <p className="mt-1 text-red-600">{errorMessage}</p>}
+            <p className="mt-1">Please try again or email us directly at contact@biodavis.com</p>
+          </div>
         </div>
       )}
     </form>
