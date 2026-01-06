@@ -15,8 +15,21 @@ export async function POST(request: Request) {
     const body = await request.json();
     const data = contactSchema.parse(body);
 
+    // Debug: Log environment variable status
+    const apiKey = process.env.RESEND_API_KEY;
+    console.log("RESEND_API_KEY exists:", !!apiKey);
+    console.log("RESEND_API_KEY length:", apiKey?.length || 0);
+
+    if (!apiKey) {
+      console.error("RESEND_API_KEY is not set in environment variables");
+      return NextResponse.json(
+        { error: "Server configuration error", details: "Email service not configured" },
+        { status: 500 }
+      );
+    }
+
     // Initialize Resend only when the API is called
-    const resend = new Resend(process.env.RESEND_API_KEY || "");
+    const resend = new Resend(apiKey);
 
     const serviceLabels: { [key: string]: string } = {
       "rna-seq": "RNA-Sequencing Analysis",
