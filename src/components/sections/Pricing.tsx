@@ -16,7 +16,7 @@ export function Pricing() {
         { name: "Single-cell RNA-seq", price: "$2,000/analysis" },
         { name: "WGS SNP analysis", price: "$150/sample" },
         { name: "Metagenome", price: "$150/sample" },
-        { name: "Nanopore long read processing", price: "$200/run" },
+        { name: "Nanopore long read processing", price: "$400/run" },
         { name: "Metabolomics", price: "$600/analysis" },
         { name: "Proteomics", price: "$600/analysis" },
       ],
