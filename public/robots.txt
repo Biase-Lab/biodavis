@@ -1,0 +1,10 @@
+# Allow all search engines to crawl the entire site
+User-agent: *
+Allow: /
+
+# Sitemap location
+Sitemap: https://biodavis.com/sitemap.xml
+
+# Optional: Crawl-delay for specific bots (uncomment if needed)
+# User-agent: Googlebot
+# Crawl-delay: 1

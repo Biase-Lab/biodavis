@@ -75,15 +75,24 @@ export function Hero() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.3 }}
-            className="flex justify-center"
+            className="flex flex-col sm:flex-row gap-4 justify-center"
           >
+            <a
+              href="https://biaselb.shinyapps.io/biodavis-pipeline/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center justify-center px-8 py-4 bg-accent-500 text-white rounded-lg font-semibold hover:bg-accent-600 transition-all duration-200 shadow-lg hover:shadow-xl hover:-translate-y-0.5"
+            >
+              Configure Your Pipeline
+              <ArrowRight className="ml-2 w-5 h-5" />
+            </a>
             <Button
               variant="secondary"
               size="lg"
               onClick={() => scrollToSection("#services")}
               className="bg-white/10 border-white text-white hover:bg-white hover:text-primary-900"
             >
-              Get Your Dashboard
+              Explore Services
             </Button>
           </motion.div>
 

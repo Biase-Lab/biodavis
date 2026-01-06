@@ -15,7 +15,11 @@ const outfit = Outfit({
 });
 
 export const metadata: Metadata = {
-  title: "BiODAVis - Omics Data Analysis and Visualization | Animal Science Bioinformatics",
+  metadataBase: new URL('https://biodavis.com'),
+  title: {
+    default: "BiODAVis - Omics Data Analysis and Visualization | Animal Science Bioinformatics",
+    template: "%s | BiODAVis"
+  },
   description:
     "Interactive multi-omics analysis for animal science researchers—delivered through custom interactive dashboards, not file dumps. Faculty-led expertise for livestock, poultry, companion animals, rodents and human genomics.",
   keywords: [
@@ -31,13 +35,56 @@ export const metadata: Metadata = {
     "dairy cattle genomics",
     "poultry genomics",
     "multi-omics integration",
+    "RNA-seq analysis",
+    "single cell RNA-seq",
+    "microbiome analysis",
+    "metabolomics",
+    "proteomics",
+    "nanopore sequencing",
   ],
-  authors: [{ name: "BiODAVis" }],
+  authors: [{ name: "BiODAVis", url: "https://biodavis.com" }],
+  creator: "BiODAVis",
+  publisher: "BiODAVis",
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
+  },
   openGraph: {
     title: "BiODAVis - Omics Data Analysis and Visualization",
     description:
       "See Your Science. Interactive multi-omics analysis for animal science researchers. Custom interactive dashboards for livestock, poultry, companion animals, rodents and human genomics.",
+    url: "https://biodavis.com",
+    siteName: "BiODAVis",
+    locale: "en_US",
     type: "website",
+    images: [
+      {
+        url: "/biodavis-logo.png",
+        width: 1200,
+        height: 630,
+        alt: "BiODAVis - Omics Data Analysis and Visualization",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "BiODAVis - Omics Data Analysis and Visualization",
+    description: "See Your Science. Interactive multi-omics analysis for animal science researchers.",
+    images: ["/biodavis-logo.png"],
+  },
+  verification: {
+    // Add your Google Search Console verification code here after setting up
+    // google: 'your-google-verification-code',
+  },
+  alternates: {
+    canonical: "https://biodavis.com",
   },
 };
 

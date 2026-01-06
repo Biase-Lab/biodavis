@@ -87,13 +87,18 @@ export function Header() {
                 {link.label}
               </button>
             ))}
-            <Button
-              variant="primary"
-              size="sm"
-              onClick={() => scrollToSection("#pricing")}
+            <a
+              href="https://biaselb.shinyapps.io/biodavis-pipeline/"
+              target="_blank"
+              rel="noopener noreferrer"
             >
-              Get Started
-            </Button>
+              <Button
+                variant="primary"
+                size="sm"
+              >
+                Configure Pipeline
+              </Button>
+            </a>
           </nav>
 
           {/* Mobile Menu Button */}
@@ -123,14 +128,21 @@ export function Header() {
                 </button>
               ))}
               <div className="px-4">
-                <Button
-                  variant="primary"
-                  size="md"
-                  className="w-full"
-                  onClick={() => scrollToSection("#pricing")}
+                <a
+                  href="https://biaselb.shinyapps.io/biodavis-pipeline/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block w-full"
+                  onClick={() => setIsMobileMenuOpen(false)}
                 >
-                  Get Started
-                </Button>
+                  <Button
+                    variant="primary"
+                    size="md"
+                    className="w-full"
+                  >
+                    Configure Pipeline
+                  </Button>
+                </a>
               </div>
             </nav>
           </div>

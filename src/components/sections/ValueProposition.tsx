@@ -127,10 +127,12 @@ export function ValueProposition() {
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
               <a
-                href="#"
+                href="https://biaselb.shinyapps.io/biodavis-pipeline/"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="inline-flex items-center justify-center px-8 py-4 bg-white text-black rounded-lg font-semibold hover:bg-gray-100 transition-all duration-200 shadow-lg hover:shadow-xl hover:-translate-y-0.5"
               >
-                Select Your Service Now
+                Configure Your Pipeline Now
               </a>
               <a
                 href="#contact"
