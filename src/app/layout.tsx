@@ -80,8 +80,7 @@ export const metadata: Metadata = {
     images: ["/biodavis-logo.png"],
   },
   verification: {
-    // Add your Google Search Console verification code here after setting up
-    // google: 'your-google-verification-code',
+    google: '99OrSEpsiIOfU4TB8pONn7ELMVrYaHYfg9mpZ2Qaz3s',
   },
   alternates: {
     canonical: "https://biodavis.com",
