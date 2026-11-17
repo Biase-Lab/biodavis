@@ -1,140 +1,131 @@
-"use client";
-
+import { ArrowRight, Check } from "lucide-react";
 import { AnimatedSection } from "@/components/ui/AnimatedSection";
+import { buttonClasses } from "@/components/ui/Button";
 import { ServiceCard } from "@/components/ui/ServiceCard";
-import { SERVICES } from "@/lib/constants";
-import Image from "next/image";
-
-const iconMap = {
-  "rna-seq": (
-    <div className="relative w-12 h-12">
-      <Image
-        src="/RNA-sequencing.png"
-        alt="RNA Sequencing"
-        fill
-        className="object-contain"
-      />
-    </div>
-  ),
-  "single-cell": (
-    <div className="relative w-12 h-12">
-      <Image
-        src="/single_cell_rna_seq.png"
-        alt="Single Cell RNA-seq"
-        fill
-        className="object-contain"
-      />
-    </div>
-  ),
-  microbiome: (
-    <div className="relative w-12 h-12">
-      <Image
-        src="/metagenome.png"
-        alt="Microbiome Analysis"
-        fill
-        className="object-contain"
-      />
-    </div>
-  ),
-  nanopore: (
-    <div className="relative w-12 h-12">
-      <Image
-        src="/DNA_sequencing_nanomore.png"
-        alt="Nanopore Sequencing"
-        fill
-        className="object-contain"
-      />
-    </div>
-  ),
-  "wgs-snp": (
-    <div className="relative w-12 h-12">
-      <Image
-        src="/WGS.png"
-        alt="Whole Genome Sequencing"
-        fill
-        className="object-contain"
-      />
-    </div>
-  ),
-  "small-rna": (
-    <div className="relative w-12 h-12">
-      <Image
-        src="/RNA-sequencing.png"
-        alt="Small RNA Sequencing"
-        fill
-        className="object-contain"
-      />
-    </div>
-  ),
-  metabolomics: (
-    <div className="relative w-12 h-12">
-      <Image
-        src="/metabolome.png"
-        alt="Metabolomics"
-        fill
-        className="object-contain"
-      />
-    </div>
-  ),
-  proteomics: (
-    <div className="relative w-12 h-12">
-      <Image
-        src="/proteome.png"
-        alt="Proteomics"
-        fill
-        className="object-contain"
-      />
-    </div>
-  ),
-};
+import { ServiceGrid } from "@/components/ui/ServiceGrid";
+import {
+  ENTERPRISE_FEATURES,
+  INCLUDED_WITH_EVERY_ANALYSIS,
+  PIPELINE_URL,
+  SERVICES,
+} from "@/lib/constants";
 
 export function Services() {
   return (
-    <section id="services" className="py-16 md:py-24 lg:py-32 bg-white">
+    <section id="services" className="bg-gray-50 py-16 md:py-24">
+      {/* Older links to the former pricing section land here. */}
+      <span id="pricing" aria-hidden="true" />
+
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <AnimatedSection>
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-primary-900 mb-4 font-heading">
+          <div className="max-w-3xl">
+            <p className="text-sm font-semibold uppercase tracking-[0.14em] text-primary-700">
+              Services &amp; Transparent Pricing
+            </p>
+            <h2 className="mt-3 font-heading text-3xl font-bold text-primary-900 md:text-4xl lg:text-5xl">
               Comprehensive Bioinformatics Services
             </h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Expert analysis across all major omics platforms, tailored to your
-              research needs
+            <p className="mt-4 text-xl text-gray-600">
+              Expert analysis across all major omics platforms, tailored to
+              your research needs.
             </p>
-            <p className="text-lg text-gray-500 max-w-3xl mx-auto mt-3">
-              Every analysis follows validated protocols grounded in peer-reviewed
-              literature and industry-leading best practices
+            <p className="mt-3 text-lg text-gray-500">
+              Every analysis follows validated protocols grounded in
+              peer-reviewed literature and industry-leading best practices.
             </p>
           </div>
         </AnimatedSection>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <ServiceGrid className="mt-12 grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-4">
           {SERVICES.map((service, index) => (
-            <AnimatedSection key={service.id} delay={0.1 * index}>
-              <ServiceCard
-                icon={iconMap[service.id as keyof typeof iconMap]}
-                title={service.title}
-                description={service.description}
-                features={service.features}
-              />
-            </AnimatedSection>
+            <ServiceCard
+              key={service.id}
+              service={service}
+              delay={0.05 * (index % 4)}
+            />
           ))}
-        </div>
+        </ServiceGrid>
 
-        <AnimatedSection delay={0.5}>
-          <div className="mt-16 text-center">
-            <p className="text-gray-600 text-lg">
-              Don&apos;t see what you need?{" "}
-              <a
-                href="#contact"
-                className="text-primary-700 font-semibold hover:text-accent-500 transition-colors"
-              >
-                Contact us
-              </a>{" "}
-              for custom analysis solutions.
+        <p className="mt-6 text-sm text-gray-500">
+          Starting academic rates.{" "}
+          <a
+            href={PIPELINE_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="font-semibold text-primary-700 underline-offset-2 hover:underline"
+          >
+            Configure your pipeline
+          </a>{" "}
+          for an exact quote. Enterprise and ongoing research partnerships are
+          priced per project.
+        </p>
+
+        <div className="mt-12 grid gap-6 lg:grid-cols-2">
+          <AnimatedSection className="flex flex-col items-start rounded-2xl bg-white p-8 shadow-sm ring-1 ring-primary-900/10">
+            <h3 className="font-heading text-2xl font-semibold text-primary-900">
+              Every Analysis Includes
+            </h3>
+            <p className="mt-2 text-gray-600">
+              All plans include our point-and-click analysis platform.
             </p>
-          </div>
-        </AnimatedSection>
+            <ul className="mb-8 mt-6 grid w-full gap-3 sm:grid-cols-2">
+              {INCLUDED_WITH_EVERY_ANALYSIS.map((item) => (
+                <li key={item} className="flex items-start text-sm text-gray-700">
+                  <Check className="mr-3 mt-0.5 h-5 w-5 flex-shrink-0 text-brand-green" />
+                  <span>{item}</span>
+                </li>
+              ))}
+            </ul>
+            <a
+              href={PIPELINE_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={buttonClasses("primary", "md", "mt-auto")}
+            >
+              Configure Your Pipeline
+              <ArrowRight className="ml-2 h-5 w-5" />
+            </a>
+          </AnimatedSection>
+
+          <AnimatedSection
+            delay={0.1}
+            className="flex flex-col items-start rounded-2xl bg-primary-900 p-8 text-white"
+          >
+            <p className="text-sm font-semibold uppercase tracking-[0.14em] text-accent-400">
+              Don&apos;t see what you need?
+            </p>
+            <h3 className="mt-2 font-heading text-2xl font-semibold">
+              Enterprise &amp; Custom Solutions
+            </h3>
+            <p className="mt-2 text-gray-300">
+              Custom pricing for ongoing research partnerships. Pricing depends
+              on project complexity, dataset size, and timeline. All new
+              clients requiring custom data analysis receive a{" "}
+              <span className="font-semibold text-white">
+                free consultation
+              </span>{" "}
+              to discuss your needs and receive a detailed quote.
+            </p>
+            <ul className="mb-8 mt-6 grid w-full gap-3 sm:grid-cols-2">
+              {ENTERPRISE_FEATURES.map((item) => (
+                <li key={item} className="flex items-start text-sm text-gray-100">
+                  <Check className="mr-3 mt-0.5 h-5 w-5 flex-shrink-0 text-accent-400" />
+                  <span>{item}</span>
+                </li>
+              ))}
+              <li className="flex items-start text-sm text-gray-100">
+                <Check className="mr-3 mt-0.5 h-5 w-5 flex-shrink-0 text-accent-400" />
+                <span>Grant support documentation</span>
+              </li>
+            </ul>
+            <a
+              href="#contact"
+              className={buttonClasses("inverseOutline", "md", "mt-auto")}
+            >
+              Contact Us
+            </a>
+          </AnimatedSection>
+        </div>
       </div>
     </section>
   );

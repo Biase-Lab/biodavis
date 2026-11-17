@@ -1,5 +1,7 @@
+"use client";
+
 import { cn } from "@/lib/utils";
-import { InputHTMLAttributes, forwardRef } from "react";
+import { InputHTMLAttributes, forwardRef, useId } from "react";
 
 export interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   label?: string;
@@ -7,15 +9,22 @@ export interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
 }
 
 const Input = forwardRef<HTMLInputElement, InputProps>(
-  ({ className, label, error, ...props }, ref) => {
+  ({ className, label, error, id, ...props }, ref) => {
+    const generatedId = useId();
+    const fieldId = id ?? generatedId;
     return (
       <div className="w-full">
         {label && (
-          <label className="block text-sm font-medium text-gray-700 mb-2">
+          <label
+            htmlFor={fieldId}
+            className="block text-sm font-medium text-gray-700 mb-2"
+          >
             {label}
           </label>
         )}
         <input
+          id={fieldId}
+          aria-invalid={error ? true : undefined}
           className={cn(
             "flex h-12 w-full rounded-lg border border-gray-300 bg-white px-4 py-2 text-base ring-offset-white file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-gray-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 transition-all",
             error && "border-red-500 focus-visible:ring-red-500",

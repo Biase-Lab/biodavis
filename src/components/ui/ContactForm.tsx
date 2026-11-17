@@ -15,7 +15,12 @@ const contactSchema = z.object({
   email: z.string().email("Invalid email address"),
   organization: z.string().optional(),
   service: z.enum(["rna-seq", "single-cell", "microbiome", "nanopore", "wgs-snp", "small-rna", "metabolomics", "proteomics", "other"]),
-  message: z.string().min(10, "Please provide more details about your project"),
+  message: z
+    .string()
+    .min(10, "Please provide more details about your project")
+    .max(5000, "Please keep your message under 5,000 characters"),
+  // Hidden from visitors; only spam bots fill it in.
+  company_website: z.string().optional(),
 });
 
 type ContactFormData = z.infer<typeof contactSchema>;
@@ -24,6 +29,8 @@ export function ContactForm() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<"idle" | "success" | "error">("idle");
   const [errorMessage, setErrorMessage] = useState<string>("");
+  // When the form appeared; the server rejects submissions that arrive too fast.
+  const [openedAt] = useState(() => Date.now());
 
   const {
     register,
@@ -45,13 +52,13 @@ export function ContactForm() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(data),
+        body: JSON.stringify({ ...data, elapsedMs: Date.now() - openedAt }),
       });
 
       const result = await response.json();
 
       if (!response.ok) {
-        throw new Error(result.details || result.error || "Failed to send message");
+        throw new Error(result.error || "Failed to send message");
       }
 
       setSubmitStatus("success");
@@ -95,10 +102,14 @@ export function ContactForm() {
       />
 
       <div>
-        <label className="block text-sm font-medium text-gray-700 mb-2">
+        <label
+          htmlFor="service-interest"
+          className="block text-sm font-medium text-gray-700 mb-2"
+        >
           Service Interest *
         </label>
         <select
+          id="service-interest"
           {...register("service")}
           className="flex h-12 w-full rounded-lg border border-gray-300 bg-white px-4 py-2 text-base ring-offset-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 transition-all"
           defaultValue=""
@@ -163,6 +174,19 @@ export function ContactForm() {
           </div>
         </div>
       )}
+
+      {/* Spam trap: off-screen, skipped by keyboard and screen readers. */}
+      <div className="absolute -left-[9999px] h-0 w-0 overflow-hidden" aria-hidden="true">
+        <label>
+          Leave this field empty
+          <input
+            type="text"
+            tabIndex={-1}
+            autoComplete="off"
+            {...register("company_website")}
+          />
+        </label>
+      </div>
     </form>
   );
 }

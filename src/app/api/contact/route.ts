@@ -1,111 +1,125 @@
 import { NextResponse } from "next/server";
 import { Resend } from "resend";
 import { z } from "zod";
+import { CONTACT_EMAIL, SERVICES } from "@/lib/constants";
+
+const serviceLabels: Record<string, string> = {
+  ...Object.fromEntries(SERVICES.map((service) => [service.id, service.title])),
+  other: "Other / Custom Analysis",
+};
 
 const contactSchema = z.object({
-  name: z.string().min(2),
-  email: z.string().email(),
-  organization: z.string().optional(),
-  service: z.string(),
-  message: z.string().min(10),
+  name: z.string().trim().min(2).max(120),
+  email: z.string().trim().email().max(200),
+  organization: z.string().trim().max(200).optional(),
+  service: z.string().refine((value) => value in serviceLabels),
+  message: z.string().trim().min(10).max(5000),
+  // Spam checks: a field real visitors never see, and how long the form was open.
+  company_website: z.string().optional(),
+  elapsedMs: z.number().optional(),
 });
 
+// Fastest a person could plausibly fill in the form.
+const MIN_FILL_TIME_MS = 3000;
+
+function escapeHtml(value: string) {
+  return value
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
+}
+
 export async function POST(request: Request) {
+  let data: z.infer<typeof contactSchema>;
   try {
-    const body = await request.json();
-    const data = contactSchema.parse(body);
+    data = contactSchema.parse(await request.json());
+  } catch {
+    return NextResponse.json(
+      { error: "Please check the form fields and try again." },
+      { status: 400 }
+    );
+  }
 
-    // Debug: Check environment variable status
-    const apiKey = process.env.RESEND_API_KEY;
-    console.log("[Contact API] RESEND_API_KEY exists:", !!apiKey);
-    console.log("[Contact API] RESEND_API_KEY length:", apiKey?.length || 0);
-    console.log("[Contact API] All env keys:", Object.keys(process.env).filter(k => k.includes('RESEND')));
+  // Bots fill in the hidden field. Report success so they do not retry.
+  if (data.company_website) {
+    return NextResponse.json({ success: true });
+  }
 
-    if (!apiKey) {
-      console.error("[Contact API] RESEND_API_KEY is not set in environment variables");
-      return NextResponse.json(
-        { error: "Server configuration error", details: "Email service not configured" },
-        { status: 500 }
-      );
-    }
+  if (data.elapsedMs === undefined || data.elapsedMs < MIN_FILL_TIME_MS) {
+    return NextResponse.json(
+      { error: "That was too fast. Please wait a moment and send again." },
+      { status: 400 }
+    );
+  }
 
-    // Initialize Resend only when the API is called
-    const resend = new Resend(apiKey);
+  const apiKey = process.env.RESEND_API_KEY;
+  if (!apiKey) {
+    console.error("[Contact API] RESEND_API_KEY is not set");
+    return NextResponse.json(
+      { error: "The contact form is temporarily unavailable." },
+      { status: 500 }
+    );
+  }
 
-    const serviceLabels: { [key: string]: string } = {
-      "rna-seq": "RNA-Sequencing Analysis",
-      "single-cell": "Single Cell RNA-Sequencing",
-      microbiome: "Microbiome Analysis",
-      nanopore: "Nanopore Long-Read Processing",
-      "wgs-snp": "Whole Genome Sequencing",
-      "small-rna": "Small RNA Sequencing",
-      metabolomics: "Metabolomics Analysis",
-      proteomics: "Proteomics Analysis",
-      other: "Other / Custom Analysis",
-    };
+  const name = escapeHtml(data.name);
+  const email = escapeHtml(data.email);
+  const organization = data.organization ? escapeHtml(data.organization) : "";
+  const service = escapeHtml(serviceLabels[data.service]);
+  const message = escapeHtml(data.message);
 
-    const emailHtml = `
-      <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-        <div style="background: linear-gradient(135deg, #1a74ba 0%, #1CABE3 100%); padding: 30px; text-align: center;">
-          <h1 style="color: white; margin: 0;">New Contact Form Submission</h1>
+  const emailHtml = `
+    <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+      <div style="background: linear-gradient(135deg, #1a74ba 0%, #1CABE3 100%); padding: 30px; text-align: center;">
+        <h1 style="color: white; margin: 0;">New Contact Form Submission</h1>
+      </div>
+
+      <div style="padding: 30px; background-color: #f9fafb;">
+        <div style="background: white; padding: 20px; border-radius: 8px; margin-bottom: 20px;">
+          <h2 style="color: #1a3a52; margin-top: 0;">Contact Information</h2>
+          <p style="margin: 10px 0;"><strong>Name:</strong> ${name}</p>
+          <p style="margin: 10px 0;"><strong>Email:</strong> <a href="mailto:${email}" style="color: #1a74ba;">${email}</a></p>
+          ${organization ? `<p style="margin: 10px 0;"><strong>Organization:</strong> ${organization}</p>` : ""}
+          <p style="margin: 10px 0;"><strong>Service Interest:</strong> ${service}</p>
         </div>
 
-        <div style="padding: 30px; background-color: #f9fafb;">
-          <div style="background: white; padding: 20px; border-radius: 8px; margin-bottom: 20px;">
-            <h2 style="color: #1a3a52; margin-top: 0;">Contact Information</h2>
-            <p style="margin: 10px 0;"><strong>Name:</strong> ${data.name}</p>
-            <p style="margin: 10px 0;"><strong>Email:</strong> <a href="mailto:${data.email}" style="color: #1a74ba;">${data.email}</a></p>
-            ${data.organization ? `<p style="margin: 10px 0;"><strong>Organization:</strong> ${data.organization}</p>` : ""}
-            <p style="margin: 10px 0;"><strong>Service Interest:</strong> ${serviceLabels[data.service] || data.service}</p>
-          </div>
-
-          <div style="background: white; padding: 20px; border-radius: 8px;">
-            <h2 style="color: #1a3a52; margin-top: 0;">Project Details</h2>
-            <p style="white-space: pre-wrap; line-height: 1.6; color: #374151;">${data.message}</p>
-          </div>
-        </div>
-
-        <div style="padding: 20px; text-align: center; color: #6b7280; font-size: 14px;">
-          <p>This message was sent from the BiODAVis contact form</p>
+        <div style="background: white; padding: 20px; border-radius: 8px;">
+          <h2 style="color: #1a3a52; margin-top: 0;">Project Details</h2>
+          <p style="white-space: pre-wrap; line-height: 1.6; color: #374151;">${message}</p>
         </div>
       </div>
-    `;
 
-    const result = await resend.emails.send({
+      <div style="padding: 20px; text-align: center; color: #6b7280; font-size: 14px;">
+        <p>This message was sent from the BiODAVis contact form</p>
+      </div>
+    </div>
+  `;
+
+  try {
+    const resend = new Resend(apiKey);
+    // Resend reports failures in `error` instead of throwing.
+    const { error } = await resend.emails.send({
       from: "BiODAVis Contact Form <onboarding@resend.dev>",
-      to: [process.env.CONTACT_EMAIL || "contact@biodavis.com"],
+      to: [process.env.CONTACT_EMAIL || CONTACT_EMAIL],
       replyTo: data.email,
-      subject: `New Contact: ${data.name} - ${serviceLabels[data.service] || data.service}`,
+      subject: `New Contact: ${data.name.replace(/[\r\n]+/g, " ")} - ${serviceLabels[data.service]}`,
       html: emailHtml,
     });
 
-    console.log("Email sent successfully:", result);
-
-    return NextResponse.json({ success: true });
-  } catch (error) {
-    console.error("Contact form error:", error);
-
-    if (error instanceof z.ZodError) {
+    if (error) {
+      console.error("[Contact API] Email was not sent:", error);
       return NextResponse.json(
-        { error: "Invalid form data", details: error.errors },
-        { status: 400 }
+        { error: "We could not send your message." },
+        { status: 502 }
       );
     }
 
-    // Log the full error for debugging
-    if (error instanceof Error) {
-      console.error("Error details:", {
-        message: error.message,
-        stack: error.stack,
-        name: error.name,
-      });
-    }
-
+    return NextResponse.json({ success: true });
+  } catch (error) {
+    console.error("[Contact API] Unexpected error:", error);
     return NextResponse.json(
-      {
-        error: "Failed to send message",
-        details: error instanceof Error ? error.message : "Unknown error"
-      },
+      { error: "We could not send your message." },
       { status: 500 }
     );
   }

@@ -3,7 +3,7 @@ User-agent: *
 Allow: /
 
 # Sitemap location
-Sitemap: https://biodavis.com/sitemap.xml
+Sitemap: https://www.biodavis.com/sitemap.xml
 
 # Optional: Crawl-delay for specific bots (uncomment if needed)
 # User-agent: Googlebot

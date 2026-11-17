@@ -14,10 +14,20 @@
 
   html {
     scroll-behavior: smooth;
+    /* Keep section headings clear of the fixed header when jumping to them. */
+    scroll-padding-top: 5rem;
   }
 }
 
 @layer utilities {
+  /* Fades the outer edges of the logo artwork so no rectangle shows around it. */
+  .feather-edges {
+    mask-image: linear-gradient(to right, transparent, #000 4%, #000 90%, transparent),
+      linear-gradient(to bottom, transparent, #000 10%);
+    mask-composite: intersect;
+    -webkit-mask-composite: source-in;
+  }
+
   .text-balance {
     text-wrap: balance;
   }

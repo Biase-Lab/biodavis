@@ -1,146 +1,171 @@
-"use client";
-
+import {
+  ArrowRight,
+  HeadphonesIcon,
+  MousePointerClick,
+  Sliders,
+} from "lucide-react";
 import { AnimatedSection } from "@/components/ui/AnimatedSection";
-import { Sliders, MousePointerClick, HeadphonesIcon } from "lucide-react";
+import { buttonClasses } from "@/components/ui/Button";
+import { PIPELINE_URL } from "@/lib/constants";
+import { cn } from "@/lib/utils";
+
+const FEATURES = [
+  {
+    icon: MousePointerClick,
+    title: "Interactive Dashboards",
+    description:
+      "We deliver custom interactive dashboards—not file dumps. Explore your results interactively, adjust parameters, visualize pathways, and generate publication figures on demand. No coding required, no zip files to decipher.",
+    featured: true,
+  },
+  {
+    icon: HeadphonesIcon,
+    title: "Animal Science Expertise",
+    description:
+      "We don't just deliver results—we provide expert interpretation for livestock, poultry, companion animals, rodents and human studies. Faculty-led guidance from someone who understands production traits, disease models, and species-specific biology.",
+    featured: false,
+  },
+  {
+    icon: Sliders,
+    title: "Multi-Omics Integration",
+    description:
+      "Every analysis is customized to your specific research questions and data types. We integrate transcriptomics, metabolomics, and proteomics to reveal mechanisms that single-omics approaches miss—connecting the dots across molecular layers.",
+    featured: false,
+  },
+];
+
+const STEPS = [
+  {
+    title: "Select Your Service",
+    description: "Choose the analysis type for your research",
+  },
+  {
+    title: "Configure Pipeline",
+    description: "Customize parameters with simple clicks",
+  },
+  {
+    title: "Upload Your Data",
+    description: "Securely upload your raw data",
+  },
+  {
+    title: "Receive Your Dashboard",
+    description: "Get your custom interactive dashboard with visualizations",
+  },
+  {
+    title: "Explore & Publish",
+    description: "Generate figures and gain insights from your data",
+  },
+];
+
+const brandGradient =
+  "bg-gradient-to-br from-brand-green via-brand-blue to-brand-violet";
 
 export function ValueProposition() {
-  const features = [
-    {
-      icon: <MousePointerClick className="w-12 h-12" />,
-      title: "Interactive Dashboards",
-      description:
-        "We deliver custom interactive dashboards—not file dumps. Explore your results interactively, adjust parameters, visualize pathways, and generate publication figures on demand. No coding required, no zip files to decipher.",
-      color: "from-accent-500 to-accent-700",
-      featured: true,
-    },
-    {
-      icon: <HeadphonesIcon className="w-12 h-12" />,
-      title: "Animal Science Expertise",
-      description:
-        "We don't just deliver results—we provide expert interpretation for livestock, poultry, companion animals, rodents and human studies. Faculty-led guidance from someone who understands production traits, disease models, and species-specific biology.",
-      color: "from-primary-700 to-accent-500",
-    },
-    {
-      icon: <Sliders className="w-12 h-12" />,
-      title: "Multi-Omics Integration",
-      description:
-        "Every analysis is customized to your specific research questions and data types. We integrate transcriptomics, metabolomics, and proteomics to reveal mechanisms that single-omics approaches miss—connecting the dots across molecular layers.",
-      color: "from-primary-500 to-primary-700",
-    },
-  ];
-
   return (
-    <section className="py-16 md:py-24 lg:py-32 bg-primary-900 text-white">
+    <section id="why" className="bg-primary-900 py-16 text-white md:py-24">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <AnimatedSection>
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 font-heading">
-              Why Choose BiODAVis?
-            </h2>
-            <p className="text-xl text-gray-300 max-w-3xl mx-auto">
-              Professional analysis meets user-friendly technology
-            </p>
-          </div>
+        <AnimatedSection className="mx-auto max-w-3xl text-center">
+          <h2 className="font-heading text-3xl font-bold md:text-4xl lg:text-5xl">
+            Why Choose BiODAVis?
+          </h2>
+          <p className="mt-4 text-xl text-gray-300">
+            Professional analysis meets user-friendly technology
+          </p>
         </AnimatedSection>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-16">
-          {features.map((feature, index) => (
-            <AnimatedSection key={index} delay={0.1 * index}>
-              <div
-                className={`relative h-full bg-white/5 backdrop-blur-sm rounded-2xl p-8 hover:bg-white/10 transition-all duration-300 ${
-                  feature.featured ? "lg:scale-105 ring-2 ring-accent-500" : ""
-                }`}
-              >
-                {feature.featured && (
-                  <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
-                    <span className="bg-accent-500 text-white px-4 py-1 rounded-full text-sm font-semibold">
-                      Key Differentiator
-                    </span>
-                  </div>
-                )}
-                <div
-                  className={`inline-flex p-4 rounded-xl bg-gradient-to-br ${feature.color} text-white mb-6`}
+        <div className="mt-12 grid gap-6 lg:grid-cols-3">
+          {FEATURES.map((feature, index) => (
+            <AnimatedSection
+              key={feature.title}
+              delay={0.1 * index}
+              className={cn(
+                "rounded-2xl bg-white/5 p-7",
+                feature.featured
+                  ? "ring-2 ring-accent-500"
+                  : "ring-1 ring-white/10"
+              )}
+            >
+              <div className="flex items-center justify-between gap-3">
+                <span
+                  className={`inline-flex h-12 w-12 items-center justify-center rounded-xl ${brandGradient}`}
                 >
-                  {feature.icon}
-                </div>
-                <h3 className="text-2xl font-semibold mb-4 font-heading">
-                  {feature.title}
-                </h3>
-                <p className="text-gray-300 leading-relaxed">
-                  {feature.description}
-                </p>
+                  <feature.icon className="h-6 w-6" />
+                </span>
+                {feature.featured && (
+                  <span className="rounded-full bg-accent-500 px-3 py-1 text-xs font-semibold">
+                    Key Differentiator
+                  </span>
+                )}
               </div>
+              <h3 className="mt-5 font-heading text-xl font-semibold md:text-2xl">
+                {feature.title}
+              </h3>
+              <p className="mt-3 leading-relaxed text-gray-300">
+                {feature.description}
+              </p>
             </AnimatedSection>
           ))}
         </div>
 
-        {/* Visual Diagram Section */}
-        <AnimatedSection delay={0.3}>
-          <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-8 md:p-12">
-            <h3 className="text-2xl md:text-3xl font-semibold text-center mb-8 font-heading">
-              From Data to an Informative Dashboard in Five Simple Steps
-            </h3>
-            <div className="grid grid-cols-1 md:grid-cols-5 gap-6">
-              {[
-                {
-                  step: "1",
-                  title: "Select Your Service",
-                  desc: "Choose the analysis type for your research",
-                },
-                {
-                  step: "2",
-                  title: "Configure Pipeline",
-                  desc: "Customize parameters with simple clicks",
-                },
-                {
-                  step: "3",
-                  title: "Upload Your Data",
-                  desc: "Securely upload your raw data",
-                },
-                {
-                  step: "4",
-                  title: "Receive Your Dashboard",
-                  desc: "Get your custom interactive dashboard with visualizations",
-                },
-                {
-                  step: "5",
-                  title: "Explore & Publish",
-                  desc: "Generate figures and gain insights from your data",
-                },
-              ].map((item, index) => (
-                <div key={index} className="text-center relative">
-                  <div className="w-16 h-16 bg-gradient-to-br from-accent-500 to-primary-500 rounded-full flex items-center justify-center text-2xl font-bold mx-auto mb-4">
-                    {item.step}
-                  </div>
-                  <h4 className="font-semibold text-lg mb-2">{item.title}</h4>
-                  <p className="text-gray-300 text-sm">{item.desc}</p>
+        <AnimatedSection className="mt-16 border-t border-white/10 pt-14">
+          <h3 className="text-center font-heading text-2xl font-semibold md:text-3xl">
+            From Data to an Informative Dashboard in Five Simple Steps
+          </h3>
+
+          <ol className="mt-10 grid gap-8 md:grid-cols-5">
+            {STEPS.map((step, index) => (
+              <li
+                key={step.title}
+                className="relative flex gap-4 md:block md:text-center"
+              >
+                {/* Line to the next step: vertical on phones, horizontal on wide screens */}
+                {index < STEPS.length - 1 && (
+                  <>
+                    <span
+                      aria-hidden="true"
+                      className="absolute -bottom-8 left-6 top-12 w-px bg-white/25 md:hidden"
+                    />
+                    <span
+                      aria-hidden="true"
+                      className="absolute left-1/2 top-6 hidden h-px w-[calc(100%+2rem)] bg-white/25 md:block"
+                    />
+                  </>
+                )}
+                <span
+                  className={`relative z-10 flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full font-heading text-lg font-bold md:mx-auto ${brandGradient}`}
+                >
+                  {index + 1}
+                </span>
+                <div className="md:mt-4">
+                  <h4 className="text-lg font-semibold">{step.title}</h4>
+                  <p className="mt-1 text-sm text-gray-300">
+                    {step.description}
+                  </p>
                 </div>
-              ))}
-            </div>
-          </div>
+              </li>
+            ))}
+          </ol>
         </AnimatedSection>
 
-        <AnimatedSection delay={0.4}>
-          <div className="mt-12 text-center">
-            <p className="text-xl text-gray-300 mb-6">
-              Ready to experience the difference?
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-              <a
-                href="https://biaselb.shinyapps.io/biodavis-pipeline/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center justify-center px-8 py-4 bg-white text-black rounded-lg font-semibold hover:bg-gray-100 transition-all duration-200 shadow-lg hover:shadow-xl hover:-translate-y-0.5"
-              >
-                Configure Your Pipeline Now
-              </a>
-              <a
-                href="#contact"
-                className="inline-flex items-center justify-center px-8 py-4 bg-primary-700 text-white rounded-lg font-semibold hover:bg-primary-800 transition-all duration-200 shadow-lg hover:shadow-xl hover:-translate-y-0.5"
-              >
-                Schedule a Consultation for Custom Analysis
-              </a>
-            </div>
+        <AnimatedSection className="mt-14 text-center">
+          <p className="text-xl text-gray-300">
+            Ready to experience the difference?
+          </p>
+          <div className="mt-6 flex flex-col items-center justify-center gap-4 sm:flex-row">
+            <a
+              href={PIPELINE_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={buttonClasses("inverse", "lg", "w-full sm:w-auto")}
+            >
+              Configure Your Pipeline
+              <ArrowRight className="ml-2 h-5 w-5" />
+            </a>
+            <a
+              href="#contact"
+              className={buttonClasses("inverseOutline", "lg", "w-full text-center sm:w-auto")}
+            >
+              Schedule a Consultation for Custom Analysis
+            </a>
           </div>
         </AnimatedSection>
       </div>

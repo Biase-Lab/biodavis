@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter, Outfit } from "next/font/google";
 import "./globals.css";
+import { SITE_URL } from "@/lib/constants";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -15,7 +16,7 @@ const outfit = Outfit({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://biodavis.com'),
+  metadataBase: new URL(SITE_URL),
   title: {
     default: "BiODAVis - Omics Data Analysis and Visualization | Animal Science Bioinformatics",
     template: "%s | BiODAVis"
@@ -42,7 +43,7 @@ export const metadata: Metadata = {
     "proteomics",
     "nanopore sequencing",
   ],
-  authors: [{ name: "BiODAVis", url: "https://biodavis.com" }],
+  authors: [{ name: "BiODAVis", url: SITE_URL }],
   creator: "BiODAVis",
   publisher: "BiODAVis",
   robots: {
@@ -60,13 +61,13 @@ export const metadata: Metadata = {
     title: "BiODAVis - Omics Data Analysis and Visualization",
     description:
       "See Your Science. Interactive multi-omics analysis for animal science researchers. Custom interactive dashboards for livestock, poultry, companion animals, rodents and human genomics.",
-    url: "https://biodavis.com",
+    url: SITE_URL,
     siteName: "BiODAVis",
     locale: "en_US",
     type: "website",
     images: [
       {
-        url: "/biodavis-logo.png",
+        url: "/og-image.jpg",
         width: 1200,
         height: 630,
         alt: "BiODAVis - Omics Data Analysis and Visualization",
@@ -77,13 +78,13 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "BiODAVis - Omics Data Analysis and Visualization",
     description: "See Your Science. Interactive multi-omics analysis for animal science researchers.",
-    images: ["/biodavis-logo.png"],
+    images: ["/og-image.jpg"],
   },
   verification: {
     google: '99OrSEpsiIOfU4TB8pONn7ELMVrYaHYfg9mpZ2Qaz3s',
   },
   alternates: {
-    canonical: "https://biodavis.com",
+    canonical: SITE_URL,
   },
 };
 
@@ -94,7 +95,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${inter.variable} ${outfit.variable}`}>
-      <body className="font-sans antialiased">{children}</body>
+      {/* Browser extensions (e.g. Grammarly) add attributes to <body>; ignore that mismatch. */}
+      <body className="font-sans antialiased" suppressHydrationWarning>
+        {children}
+      </body>
     </html>
   );
 }

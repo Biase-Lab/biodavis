@@ -11,16 +11,26 @@ const config: Config = {
       colors: {
         primary: {
           900: "#1a3a52", // Dark navy - headers, emphasis
+          800: "#17578c", // Deep blue - hover on medium-blue buttons
           700: "#1a74ba", // Medium blue - CTAs, links
           500: "#2099CC", // Bright blue - primary buttons
           300: "#5eb8e0", // Light blue - hover states
           100: "#bedbf2", // Pale blue - backgrounds, accents
+          50: "#eef6fc", // Faint blue - card tints
         },
         accent: {
           700: "#0891b2", // Darker teal - emphasis
           600: "#0ea5d4", // Medium teal
           500: "#1CABE3", // Teal/cyan - icons, highlights
           400: "#4dc3ee", // Light teal
+          100: "#cdeffb", // Pale teal - borders
+          50: "#ecf9fe", // Faint teal - card tints
+        },
+        // The three colours of the logo, used as an accent gradient
+        brand: {
+          green: "#2f9e6e",
+          blue: "#1a74ba",
+          violet: "#6b3fa0",
         },
       },
       fontFamily: {
@@ -29,7 +39,7 @@ const config: Config = {
       },
       animation: {
         "fade-in": "fadeIn 0.5s ease-in",
-        "slide-up": "slideUp 0.6s ease-out",
+        "slide-up": "slideUp 0.6s ease-out both",
       },
       keyframes: {
         fadeIn: {

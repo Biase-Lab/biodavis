@@ -1,151 +1,90 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { Menu, X } from "lucide-react";
-import { Button } from "@/components/ui/Button";
-import { NAV_LINKS } from "@/lib/constants";
+import { useState } from "react";
 import Image from "next/image";
+import { Menu, X } from "lucide-react";
+import { buttonClasses } from "@/components/ui/Button";
+import { NAV_LINKS, PIPELINE_URL } from "@/lib/constants";
 
 export function Header() {
-  const [isScrolled, setIsScrolled] = useState(false);
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
-  const scrollToSection = (href: string) => {
-    const element = document.querySelector(href);
-    if (element) {
-      const offset = 80; // Header height
-      const elementPosition = element.getBoundingClientRect().top;
-      const offsetPosition = elementPosition + window.pageYOffset - offset;
-
-      window.scrollTo({
-        top: offsetPosition,
-        behavior: "smooth",
-      });
-    }
-    setIsMobileMenuOpen(false);
-  };
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const closeMenu = () => setIsMenuOpen(false);
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isScrolled
-          ? "bg-white/95 backdrop-blur-md shadow-md"
-          : "bg-transparent"
+      className={`fixed inset-x-0 top-0 z-50 border-b border-primary-900/10 backdrop-blur-md ${
+        isMenuOpen ? "bg-white" : "bg-white/90"
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-20">
-          {/* Logo */}
-          <button
-            onClick={() => scrollToSection("#hero")}
-            className="flex items-center space-x-3 group"
-          >
-            <div className="relative h-12 w-32 sm:w-40">
-              <Image
-                src="/biodavis-logo.png"
-                alt="BiODAVis - Omics Data Analysis and Visualization"
-                fill
-                className="object-contain object-left"
-                priority
-              />
-            </div>
-            <div className="hidden sm:block">
-              <div className={`text-lg font-bold transition-colors duration-300 ${
-                isScrolled ? 'text-primary-900' : 'text-white'
-              }`}>
-                <span className={isScrolled ? 'text-accent-600' : 'text-accent-400'}>O</span>mics <span className={isScrolled ? 'text-accent-600' : 'text-accent-400'}>D</span>ata <span className={isScrolled ? 'text-accent-600' : 'text-accent-400'}>A</span>nalysis & <span className={isScrolled ? 'text-accent-600' : 'text-accent-400'}>Vis</span>ualization
-              </div>
-              <div className={`text-lg font-bold italic transition-colors duration-300 ${
-                isScrolled ? 'text-accent-600' : 'text-gray-100'
-              }`}>
-                See Your Science
-              </div>
-            </div>
-          </button>
+        <div className="flex h-16 items-center justify-between">
+          <a href="#hero" onClick={closeMenu} className="flex items-center">
+            <Image
+              src="/biodavis-wordmark.png"
+              alt="BiODAVis"
+              width={560}
+              height={96}
+              priority
+              className="h-8 w-auto"
+            />
+          </a>
 
-          {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center space-x-8">
+          <nav className="hidden md:flex items-center gap-8" aria-label="Main">
             {NAV_LINKS.map((link) => (
-              <button
+              <a
                 key={link.href}
-                onClick={() => scrollToSection(link.href)}
-                className={`font-medium transition-colors ${
-                  isScrolled
-                    ? 'text-gray-700 hover:text-primary-700'
-                    : 'text-white hover:text-gray-200'
-                }`}
+                href={link.href}
+                className="text-sm font-medium text-primary-900/80 transition-colors hover:text-primary-700"
               >
                 {link.label}
-              </button>
+              </a>
             ))}
             <a
-              href="https://biaselb.shinyapps.io/biodavis-pipeline/"
+              href={PIPELINE_URL}
               target="_blank"
               rel="noopener noreferrer"
+              className={buttonClasses("primary", "sm")}
             >
-              <Button
-                variant="primary"
-                size="sm"
-              >
-                Configure Pipeline
-              </Button>
+              Configure Your Pipeline
             </a>
           </nav>
 
-          {/* Mobile Menu Button */}
           <button
-            className={`md:hidden p-2 transition-colors ${
-              isScrolled
-                ? 'text-gray-700 hover:text-primary-700'
-                : 'text-white hover:text-gray-200'
-            }`}
-            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            type="button"
+            className="md:hidden -mr-2 p-2 text-primary-900"
+            aria-label={isMenuOpen ? "Close menu" : "Open menu"}
+            aria-expanded={isMenuOpen}
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
           >
-            {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+            {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
         </div>
 
-        {/* Mobile Menu */}
-        {isMobileMenuOpen && (
-          <div className="md:hidden py-4 border-t border-gray-200 bg-white">
-            <nav className="flex flex-col space-y-4">
-              {NAV_LINKS.map((link) => (
-                <button
-                  key={link.href}
-                  onClick={() => scrollToSection(link.href)}
-                  className="text-gray-700 hover:text-primary-700 font-medium transition-colors text-left px-4 py-2"
-                >
-                  {link.label}
-                </button>
-              ))}
-              <div className="px-4">
-                <a
-                  href="https://biaselb.shinyapps.io/biodavis-pipeline/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="block w-full"
-                  onClick={() => setIsMobileMenuOpen(false)}
-                >
-                  <Button
-                    variant="primary"
-                    size="md"
-                    className="w-full"
-                  >
-                    Configure Pipeline
-                  </Button>
-                </a>
-              </div>
-            </nav>
-          </div>
+        {isMenuOpen && (
+          <nav
+            className="md:hidden flex flex-col gap-1 border-t border-primary-900/10 py-4"
+            aria-label="Main"
+          >
+            {NAV_LINKS.map((link) => (
+              <a
+                key={link.href}
+                href={link.href}
+                onClick={closeMenu}
+                className="rounded-lg px-2 py-3 font-medium text-primary-900 hover:bg-primary-50"
+              >
+                {link.label}
+              </a>
+            ))}
+            <a
+              href={PIPELINE_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={closeMenu}
+              className={buttonClasses("primary", "md", "mt-3 w-full")}
+            >
+              Configure Your Pipeline
+            </a>
+          </nav>
         )}
       </div>
     </header>

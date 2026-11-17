@@ -1,9 +1,7 @@
-"use client";
-
 import { AnimatedSection } from "@/components/ui/AnimatedSection";
 import { ContactForm } from "@/components/ui/ContactForm";
 import { CONTACT_EMAIL } from "@/lib/constants";
-import { Mail, Clock, Linkedin } from "lucide-react";
+import { Mail, Clock } from "lucide-react";
 
 export function Contact() {
   return (
@@ -68,25 +66,6 @@ export function Contact() {
                       <p className="text-gray-600">
                         We respond to all inquiries within 24 hours
                       </p>
-                    </div>
-                  </div>
-
-                  <div className="flex items-start space-x-4">
-                    <div className="flex-shrink-0 w-12 h-12 bg-primary-100 rounded-lg flex items-center justify-center">
-                      <Linkedin className="w-6 h-6 text-primary-700" />
-                    </div>
-                    <div>
-                      <h4 className="font-semibold text-primary-900 mb-1">
-                        Connect With Us
-                      </h4>
-                      <a
-                        href="https://linkedin.com"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-primary-700 hover:text-accent-500 transition-colors"
-                      >
-                        Follow us on LinkedIn
-                      </a>
                     </div>
                   </div>
                 </div>

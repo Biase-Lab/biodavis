@@ -1,125 +1,121 @@
-"use client";
+import { ArrowRight, Check } from "lucide-react";
+import { buttonClasses } from "@/components/ui/Button";
+import { PIPELINE_URL, SERVICES } from "@/lib/constants";
+import Image from "next/image";
 
-import { Button } from "@/components/ui/Button";
-import { motion } from "framer-motion";
-import { ArrowRight, Sparkles } from "lucide-react";
+const HIGHLIGHTS = [
+  "Virginia Tech Faculty",
+  "Extensive Omics Expertise",
+  "Publication Support",
+  "2-Week Delivery",
+];
+
+// Entrance animation; skipped for visitors who ask for reduced motion.
+const reveal = "motion-safe:animate-slide-up";
+const delay = (seconds: number) => ({ animationDelay: `${seconds}s` });
 
 export function Hero() {
-  const scrollToSection = (id: string) => {
-    const element = document.querySelector(id);
-    if (element) {
-      const offset = 80;
-      const elementPosition = element.getBoundingClientRect().top;
-      const offsetPosition = elementPosition + window.pageYOffset - offset;
-      window.scrollTo({ top: offsetPosition, behavior: "smooth" });
-    }
-  };
-
   return (
     <section
       id="hero"
-      className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-primary-900 via-primary-700 to-accent-700"
+      className="relative isolate overflow-hidden bg-white pt-28 pb-16 sm:pt-32 lg:pt-40 lg:pb-24"
     >
-      {/* Background Pattern */}
-      <div className="absolute inset-0 opacity-10">
-        <div className="absolute inset-0" style={{
-          backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
-        }} />
+      {/* Soft colour wash in the logo's green, blue and violet */}
+      <div aria-hidden="true" className="pointer-events-none absolute inset-0 -z-10">
+        <div className="absolute -top-40 -right-24 h-[520px] w-[520px] rounded-full bg-brand-violet/15 blur-3xl" />
+        <div className="absolute top-1/3 right-1/4 h-[420px] w-[420px] rounded-full bg-accent-400/20 blur-3xl" />
+        <div className="absolute -bottom-48 -left-32 h-[460px] w-[460px] rounded-full bg-brand-green/15 blur-3xl" />
       </div>
 
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
-        <div className="text-center">
-          {/* Main Headline */}
-          <motion.h1
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.1 }}
-            className="text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-6 font-heading"
-          >
-            Transform Complex Omics Data
-            <br />
-            Into{" "}
-            <span className="text-yellow-300">
-              Actionable Biological Insights
-            </span>
-          </motion.h1>
-
-          {/* Subheadline */}
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-            className="text-xl md:text-2xl text-gray-200 mb-12 max-w-6xl mx-auto leading-relaxed"
-          >
-            Professional omics and multi-omics analysis for
-            <br />
-            livestock, poultry, companion animals, rodents and human research.
-          </motion.p>
-
-          {/* Second Badge */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.25 }}
-            className="inline-flex items-center space-x-3 bg-white/10 backdrop-blur-md rounded-full px-10 py-6 mb-16"
-          >
-            <Sparkles className="w-7 h-7 text-yellow-300" />
-            <span className="text-white text-xl md:text-2xl lg:text-3xl font-bold">
-              Your results delivered through interactive dashboards—not file dumps!
-            </span>
-            <Sparkles className="w-7 h-7 text-yellow-300" />
-          </motion.div>
-
-          {/* CTAs */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.3 }}
-            className="flex flex-col sm:flex-row gap-4 justify-center"
-          >
-            <a
-              href="https://biaselb.shinyapps.io/biodavis-pipeline/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center justify-center px-8 py-4 bg-accent-500 text-white rounded-lg font-semibold hover:bg-accent-600 transition-all duration-200 shadow-lg hover:shadow-xl hover:-translate-y-0.5"
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="grid items-center gap-12 lg:grid-cols-[0.85fr_1.15fr] lg:gap-10 xl:grid-cols-[0.95fr_1.05fr] xl:gap-16">
+          {/* Text comes first on phones; on wide screens it sits to the right of the logo. */}
+          <div className="lg:order-2">
+            <p
+              className={`mb-5 text-sm font-semibold uppercase tracking-[0.14em] text-primary-900/70 ${reveal}`}
             >
-              Configure Your Pipeline
-              <ArrowRight className="ml-2 w-5 h-5" />
-            </a>
-            <Button
-              variant="secondary"
-              size="lg"
-              onClick={() => scrollToSection("#services")}
-              className="bg-white/10 border-white text-white hover:bg-white hover:text-primary-900"
-            >
-              Explore Services
-            </Button>
-          </motion.div>
+              <span className="text-primary-700">O</span>mics{" "}
+              <span className="text-primary-700">D</span>ata{" "}
+              <span className="text-primary-700">A</span>nalysis &amp;{" "}
+              <span className="text-primary-700">Vis</span>ualization
+            </p>
 
-          {/* Trust Indicators */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.5, delay: 0.4 }}
-            className="mt-16 flex flex-wrap items-center justify-center gap-8 text-gray-200"
-          >
-            <div className="flex items-center space-x-2">
-              <div className="w-2 h-2 bg-accent-500 rounded-full" />
-              <span className="text-base">Virginia Tech Faculty</span>
+            <h1
+              className={`font-heading text-5xl font-bold leading-[1.05] tracking-tight text-primary-900 sm:text-6xl xl:text-7xl ${reveal}`}
+              style={delay(0.05)}
+            >
+              See your{" "}
+              <span className="bg-gradient-to-r from-brand-green via-brand-blue to-brand-violet bg-clip-text text-transparent">
+                science.
+              </span>
+            </h1>
+
+            <p
+              className={`mt-6 max-w-xl text-lg leading-relaxed text-gray-600 sm:text-xl ${reveal}`}
+              style={delay(0.12)}
+            >
+              Complex omics data transformed into actionable biological
+              insights, delivered through interactive dashboards—not file
+              dumps. Professional omics and multi-omics analysis for livestock,
+              poultry, companion animals, rodents and human research.
+            </p>
+
+            <div
+              className={`mt-9 flex flex-col gap-4 sm:flex-row ${reveal}`}
+              style={delay(0.2)}
+            >
+              <a
+                href={PIPELINE_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={buttonClasses("primary", "lg", "whitespace-nowrap lg:px-6 xl:px-8")}
+              >
+                Configure Your Pipeline
+                <ArrowRight className="ml-2 h-5 w-5" />
+              </a>
+              <a href="#services" className={buttonClasses("secondary", "lg", "whitespace-nowrap lg:px-6 xl:px-8")}>
+                Explore Services
+              </a>
             </div>
-            <div className="flex items-center space-x-2">
-              <div className="w-2 h-2 bg-accent-500 rounded-full" />
-              <span className="text-base">Extensive Omics Expertise</span>
-            </div>
-            <div className="flex items-center space-x-2">
-              <div className="w-2 h-2 bg-accent-500 rounded-full" />
-              <span className="text-base">Publication Support</span>
-            </div>
-            <div className="flex items-center space-x-2">
-              <div className="w-2 h-2 bg-accent-500 rounded-full" />
-              <span className="text-base">2-Week Delivery</span>
-            </div>
-          </motion.div>
+
+            <ul
+              className={`mt-10 grid max-w-lg grid-cols-2 gap-x-6 gap-y-3 text-sm font-medium text-primary-900/80 ${reveal}`}
+              style={delay(0.28)}
+            >
+              {HIGHLIGHTS.map((item) => (
+                <li key={item} className="flex items-center gap-2">
+                  <Check className="h-4 w-4 flex-shrink-0 text-brand-green" />
+                  {item}
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div className={`mx-auto w-full max-w-xl lg:order-1 lg:max-w-none ${reveal}`} style={delay(0.2)}>
+            {/* The logo artwork, on a transparent background so it sits on the colour wash */}
+            <Image
+              src="/biodavis-art.png"
+              alt="BiODAVis logo: a DNA helix flowing into charts and network visualizations"
+              width={1200}
+              height={445}
+              priority
+              sizes="(min-width: 1024px) 600px, 100vw"
+              className="feather-edges h-auto w-full"
+            />
+
+            <ul className="mt-6 flex flex-wrap justify-center gap-2 lg:mt-8">
+              {SERVICES.map((service) => (
+                <li key={service.id}>
+                  <a
+                    href={`#service-${service.id}`}
+                    className="inline-block rounded-full border border-primary-900/10 bg-white/80 px-3.5 py-1.5 text-sm font-medium text-primary-900/80 transition-colors hover:border-primary-700 hover:text-primary-700"
+                  >
+                    {service.shortTitle}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
       </div>
     </section>
