@@ -95,9 +95,11 @@ export const SERVICES: readonly Service[] = [
     features: [
       "Quality control reports",
       "Cell type clustering and annotation",
+      "Marker gene identification",
       "Trajectory and pseudotime analysis",
       "Multi-sample integration",
       "Cell-cell communication analysis",
+      "Pseudobulk differential expression",
     ],
   },
   {
