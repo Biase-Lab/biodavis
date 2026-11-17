@@ -46,7 +46,7 @@ export const SERVICES: readonly Service[] = [
     title: "RNA-Sequencing Analysis",
     category: "Transcriptomics",
     icon: "/icons/rna-seq.png",
-    price: "$175",
+    price: "$180",
     priceUnit: "per sample",
     summary:
       "Comprehensive differential expression analysis, pathway enrichment, and publication-ready visualizations for bulk RNA-Seq data.",
@@ -67,7 +67,7 @@ export const SERVICES: readonly Service[] = [
     title: "Small RNA Sequencing",
     category: "Transcriptomics",
     icon: "/icons/rna-seq.png",
-    price: "$175",
+    price: "$180",
     priceUnit: "per sample",
     summary:
       "Comprehensive analysis of small non-coding RNAs including miRNA, siRNA, and piRNA profiling.",
@@ -108,7 +108,7 @@ export const SERVICES: readonly Service[] = [
     title: "Microbiome Analysis",
     category: "Microbiome",
     icon: "/icons/microbiome.png",
-    price: "$150",
+    price: "$180",
     priceUnit: "per sample",
     summary:
       "Targeted 16S rRNA and shotgun metagenomic analysis with comprehensive diversity and differential abundance testing.",
@@ -163,7 +163,7 @@ export const SERVICES: readonly Service[] = [
     title: "Metabolomics Analysis",
     category: "Mass spectrometry",
     icon: "/icons/metabolomics.png",
-    price: "$600",
+    price: "$800",
     priceUnit: "per analysis",
     summary:
       "Untargeted and targeted metabolomics data analysis from LC-MS and GC-MS platforms.",
@@ -183,7 +183,7 @@ export const SERVICES: readonly Service[] = [
     title: "Proteomics Analysis",
     category: "Mass spectrometry",
     icon: "/icons/proteomics.png",
-    price: "$600",
+    price: "$800",
     priceUnit: "per analysis",
     summary:
       "Label-free and labeled quantitative proteomics analysis from mass spectrometry data.",
