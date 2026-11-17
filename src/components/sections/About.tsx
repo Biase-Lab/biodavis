@@ -1,11 +1,13 @@
 import Image from "next/image";
+import { ExternalLink } from "lucide-react";
 import { AnimatedSection } from "@/components/ui/AnimatedSection";
+import { SCHOLAR_URL } from "@/lib/constants";
 
 const CREDENTIALS = [
   { value: "Virginia Tech", label: "Faculty Scientist" },
   { value: "20+ Years", label: "Animal Omics" },
-  { value: "Published", label: "Animal Scientist" },
-  { value: "Multi-Omics", label: "Integration Expert" },
+  { value: "$1.76M", label: "USDA funding as principal investigator" },
+  { value: "3,500+", label: "Citations, h-index 24 (Google Scholar)" },
 ];
 
 export function About() {
@@ -38,6 +40,15 @@ export function About() {
                   Ph.D. in Genetics and Molecular Biology, University of São
                   Paulo. Leads USDA-funded research.
                 </p>
+                <a
+                  href={SCHOLAR_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="mt-3 inline-flex items-center gap-1.5 text-sm font-semibold text-accent-400 hover:underline"
+                >
+                  View publications on Google Scholar
+                  <ExternalLink className="h-3.5 w-3.5" aria-hidden="true" />
+                </a>
               </figcaption>
             </figure>
           </AnimatedSection>

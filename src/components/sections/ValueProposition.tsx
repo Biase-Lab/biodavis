@@ -56,6 +56,22 @@ const STEPS = [
   },
 ];
 
+const DATA_HANDLING = [
+  {
+    title: "Who sees your data",
+    description: "Only Dr. Biase. Your data is never shared with anyone else.",
+  },
+  {
+    title: "How long we keep it",
+    description:
+      "Your raw data is deleted when your dashboard is delivered.",
+  },
+  {
+    title: "Who owns the results",
+    description: "You do. The researcher who pays for the analysis owns the results.",
+  },
+];
+
 const brandGradient =
   "bg-gradient-to-br from-brand-green via-brand-blue to-brand-violet";
 
@@ -144,6 +160,22 @@ export function ValueProposition() {
               </li>
             ))}
           </ol>
+        </AnimatedSection>
+
+        <AnimatedSection className="mt-14 rounded-2xl bg-white/5 p-7 ring-1 ring-white/10">
+          <h3 className="text-center font-heading text-xl font-semibold md:text-2xl">
+            Your Data, Your Results
+          </h3>
+          <dl className="mt-6 grid gap-6 md:grid-cols-3">
+            {DATA_HANDLING.map((item) => (
+              <div key={item.title} className="border-l-2 border-accent-500 pl-4">
+                <dt className="font-semibold">{item.title}</dt>
+                <dd className="mt-1 text-sm leading-relaxed text-gray-300">
+                  {item.description}
+                </dd>
+              </div>
+            ))}
+          </dl>
         </AnimatedSection>
 
         <AnimatedSection className="mt-14 text-center">

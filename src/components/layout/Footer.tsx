@@ -91,6 +91,10 @@ export function Footer() {
             Virginia Tech
           </p>
           <p className="text-sm text-gray-400">
+            BiODAVis is an independent company and is not a service of Virginia
+            Tech.
+          </p>
+          <p className="text-sm text-gray-400">
             &copy; {currentYear} BiODAVis. All rights reserved.
           </p>
         </div>

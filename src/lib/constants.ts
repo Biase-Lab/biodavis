@@ -8,6 +8,10 @@ export const SITE_DESCRIPTION =
 
 export const CONTACT_EMAIL = "fbiase@vt.edu";
 
+// Public publication record, so visitors can verify the credentials shown on the site.
+export const SCHOLAR_URL =
+  "https://scholar.google.com/citations?user=iG8M1p8AAAAJ&hl=en";
+
 // The point-and-click app where clients configure an analysis.
 export const PIPELINE_URL = "https://biaselb.shinyapps.io/biodavis-pipeline/";
 
