@@ -83,7 +83,7 @@ export const SERVICES: readonly Service[] = [
     category: "Transcriptomics",
     icon: "/icons/single-cell.png",
     price: "$2,000",
-    priceUnit: "per analysis",
+    priceUnit: "for up to 4 samples",
     summary:
       "Advanced single-cell analysis including cell type identification, trajectory analysis, and multi-sample integration.",
     applications:

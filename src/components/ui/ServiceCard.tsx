@@ -50,7 +50,7 @@ export function ServiceCard({ service, delay }: ServiceCardProps) {
         {service.summary}
       </p>
 
-      <p className="mt-5 flex items-baseline gap-2 border-t border-primary-900/10 pt-4">
+      <p className="mt-5 flex flex-wrap items-baseline gap-x-2 border-t border-primary-900/10 pt-4">
         <span className="text-sm text-gray-500">from</span>
         <span className="font-heading text-3xl font-bold text-primary-900">
           {service.price}
